@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>To'xtalish sabablari</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-brand" sec:authorize="isAuthenticated()">
+             <b><span sec:authentication="name">Username</span></b>
+            &nbsp;
+            <i><span sec:authentication="principal.authorities">Roles</span></i>
+        </div>
+        <ul class="nav navbar-nav navbar-right ">
+            <li class="active" sec:authorize="hasAnyAuthority('YARATISH','ADMIN' )">
+                <a href="/adduser">Add User</a></li>
+            <li class="active" sec:authorize="hasAnyAuthority('YARATISH', 'ADMIN','Planovik')">
+                <a href="/newPlan">Kunlik Plan</a></li>
+
+            <li class="active" sec:authorize="hasAnyAuthority('YARATISH', 'ADMIN','Planovik')">
+                <a href="/newResult">Kunlik natija </a>
+            </li>
+            <li class="active" sec:authorize="hasAnyAuthority('YARATISH', 'ADMIN','Toxtalish_sababini_kirituvchi')">
+                <a href="/newSabablar">To'xtalish sabablari</a></li>
+            <li class="active"><a href="/logout">Chiqish</a></li>
+        </ul>
+    </div>
+</nav>
+<div align="center">
+    <h1>Xolodilnik zavodi to'xtalish sabablari</h1>
+
+    <form th:action="@{/static}">
+        <input type="date" name="poisk" id="poisk" size="50" th:value="${poisk}" required/>
+        &nbsp;
+        <input type="submit" value="Search"/>
+        &nbsp;
+        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()"/>
+    </form>
+    <script type="text/javascript">
+        function clearSearch() {
+            window.location = "[[@{/}]]";
+        }
+    </script>
+    <br/>
+    <table class="table table-bordered"  th:each="result : ${resultList}">
+        <thead >
+        <tr>
+            <th class="text-center" rowspan="2" bgcolor="#a9a9a9"><p></p></th>
+            <th class="text-center" colspan="4" bgcolor="#a9a9a9">Kunduzgi smena</th>
+            <th class="text-center" colspan="4" bgcolor="#a9a9a9">Tungi smena</th>
+            <th class="text-center" rowspan="2" bgcolor="#a9a9a9">Sikl time<p></p> <p>bitta qolip</p>uchun</th>
+            <th class="text-center" rowspan="3" bgcolor="#a9a9a9" >Soat</th>
+            <th class="text-center" rowspan="2" bgcolor="#a9a9a9">Umumiy ishlab <p>chiqarish soni</p></th>
+            <th class="text-center" rowspan="2" bgcolor="#a9a9a9" sec:authorize="hasAnyAuthority('ADMIN')">Action</th>
+        <tr>
+            <th class="text-center" bgcolor="#a9a9a9">Liniya 1</th>
+            <th class="text-center" bgcolor="#a9a9a9">Sikl time</th>
+            <th class="text-center" bgcolor="#a9a9a9">Liniya 2</th>
+            <th class="text-center" bgcolor="#a9a9a9">Sikl time</th>
+            <th class="text-center" bgcolor="#a9a9a9">Liniya 1</th>
+            <th class="text-center" bgcolor="#a9a9a9">Sikl time</th>
+            <th class="text-center" bgcolor="#a9a9a9">Liniya 2</th>
+            <th class="text-center" bgcolor="#a9a9a9">Sikl time</th>
+        </tr>
+        <tr th:each="plan : ${planList}">
+            <th class="text-center" bgcolor="#a9a9a9">KUTILGAN</th>
+            <th class="text-center" th:text="${plan.pline11}"></th>
+            <th class="text-center" th:text="${plan.pcikl11}"></th>
+            <th class="text-center" th:text="${plan.pline12}"></th>
+            <th class="text-center" th:text="${plan.pcikl12}"></th>
+            <th class="text-center" th:text="${plan.pline21}"></th>
+            <th class="text-center" th:text="${plan.pcikl21}"></th>
+            <th class="text-center" th:text="${plan.pline22}"></th>
+            <th class="text-center" th:text="${plan.pcikl22}"></th>
+            <th class="text-center" rowspan="2" > 6.4</th>
+            <th class="text-center" id="sumPlan" th:text="${plan.pline11+plan.pline12+plan.pline21+plan.pline22}"></th>
+            <th class="text-center" sec:authorize="hasAnyAuthority('ADMIN')"><a th:href="@{/deletePlan/{id}(id=${plan.id_plan})}">Delete</a></th>
+        </tr>
+        <tr>
+            <th class="text-center" bgcolor="#a9a9a9">BAJARILDI</th>
+            <th class="text-center" th:text="${result.rline11}"></th>
+            <th class="text-center" th:text="${result.rcikl11}"></th>
+            <th class="text-center" th:text="${result.rline12}"></th>
+            <th class="text-center" th:text="${result.rcikl12}"></th>
+            <th class="text-center" th:text="${result.rline21}"></th>
+            <th class="text-center" th:text="${result.rcikl21}"></th>
+            <th class="text-center" th:text="${result.rline22}"></th>
+            <th class="text-center" th:text="${result.rcikl22}"></th>
+            <th class="text-center" ></th>
+            <th class="text-center" id="sumResult" th:text="${result.rline11+result.rline12+result.rline21+result.rline22}"></th>
+            <th class="text-center" sec:authorize="hasAnyAuthority('ADMIN')"><a th:href="@{/deleteResult/{id}(id=${result.id_result})}">Delete</a></th>
+        </tr>
+        <tr>
+            <th  class="text-center" colspan="12" bgcolor="#eee8aa">To'xtalish sabablari</th>
+        </tr>
+        <tr th:each="sabablar : ${sabablarList}">
+            <td colspan="9" , align="left" th:text="${sabablar.prichina}">To'xtalish sabaplari</td>
+            <td class="text-center" th:text="${sabablar.sqolip}"></td>
+            <td class="text-center" th:text="${sabablar.ssoat}"></td>
+            <td class="text-center" id="loop" th:text="${#numbers.formatDecimal((6.4*(sabablar.sqolip*sabablar.ssoat)),0, 0)}"></td>
+            <td class="text-center"  sec:authorize="hasAnyAuthority('ADMIN')"><a th:href="@{/deleteSabablar/{id}(id=${sabablar.id_sabablar})}">Delete</a></td>
+        </tr>
+        <tr bgcolor="#a9a9a9">
+            <th colspan="11", align="left" >Umumiy to'xtalishlar (Xolodilniklar soni)</th>
+            <th class="text-center" id="total" >  </th>
+            <td class="text-center"  sec:authorize="hasAnyAuthority('ADMIN')"></td>
+
+        </tr>
+        <tr bgcolor="#a9a9a9">
+            <th colspan="11", align="left" >Ishlab chiqarishdagi yo'qotish (Xolodilniklar soni)</th>
+            <th class="text-center"  id="nisbatan"  > </th>
+            <td class="text-center"  sec:authorize="hasAnyAuthority('ADMIN')"></td>
+
+        </tr>
+
+        <script>
+            $(function (){
+                var TotalValue=0;
+                $("tr #loop").each(function (index,value){
+                    currentRow = parseInt($(this).text());
+                       TotalValue += currentRow
+               });
+               document.getElementById('total').innerHTML = TotalValue;
+            });
+
+        </script>
+        <script>
+            $(function (){
+                var TotalValue2=0;
+                $("tr #sumPlan ").each(function (index,value){
+                    currentRow = parseInt($(this).text());
+                    TotalValue2 = currentRow
+
+                });
+                $("tr #sumResult ").each(function (index,value){
+                    currentRow = parseInt($(this).text());
+                    TotalValue3 = currentRow
+
+                });
+                $("tr #total ").each(function (index,value){
+                    currentRow = parseInt($(this).text());
+                    TotalValue4 = currentRow
+
+                });
+                if (TotalValue2>TotalValue3) {
+                    document.getElementById('nisbatan').innerHTML = (TotalValue2 - TotalValue3) - TotalValue4;
+                }else {
+                    document.getElementById('nisbatan').innerHTML = TotalValue2 - (TotalValue3 - TotalValue4);
+                }
+            });
+
+        </script>
+        <script>
+            $(function (){
+                var TotalValue5=0;
+                $("tr #sumPlan").each(function (index,value){
+                    currentRow = parseInt($(this).text());
+                    TotalValue5 = currentRow
+                });
+                document.getElementById('total2').innerHTML = TotalValue5;
+            });
+            $(function (){
+                var TotalValue6=0;
+                $("tr #sumResult").each(function (index,value){
+                    currentRow = parseInt($(this).text());
+                    TotalValue6 = currentRow
+                });
+                document.getElementById('total3').innerHTML = TotalValue6;
+            });
+            $(function (){
+                var TotalValue7=0;
+                $("tr #nisbatan ").each(function (index,value){
+                    currentRow = parseInt($(this).text());
+                    TotalValue7 = currentRow
+                });
+
+                var TotalValue8=0;
+                $("tr #total ").each(function (index,value){
+                    currentRow = parseInt($(this).text());
+                    TotalValue8 = currentRow
+                });
+                document.getElementById('total5').innerHTML = TotalValue8+TotalValue7;
+            });
+
+        </script>
+
+
+
+        <button  class="button1 button"><b>Reja</b><p id="total2"></p></button>
+                <button class="button2 button"><b> Bajarildi</b> <p id="total3"></p></button>
+                <button class="button3 button"><b> Yo'qotish</b> <p id="total5"></p></button>
+
+
+        </thead>
+
+    </table>
+
+    <div>
+
+
+
+    </div>
+</div>
+<style>
+    .button {
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        margin: 4px 8px;
+
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+    .button1 {
+        background-color: #39ff00;
+        color: black;
+        border: 2px solid #0032fc;
+        width: 130px;
+    }
+
+    .button1:hover {
+        background-color: #4CAF50;
+        color: #ffffff;
+    }
+
+    .button2 {
+        background-color: #ffd400;
+        color: black;
+        border: 2px solid #0033ff;
+        width: 130px;
+    }
+
+    .button2:hover {
+        background-color: #008CBA;
+        color: white;
+    }
+    .button3 {
+        background-color: #ff0000;
+        color: black;
+        border: 2px solid #205efa;
+        width: 180px;
+    }
+
+    .button3:hover {
+        background-color: #f80101;
+        color: white;
+    }
+
+</style>
+</body>
+</html>

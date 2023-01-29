@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+    <h1>To'xtalish sabablari system</h1>
+    <hr>
+    <h2>Update Ts</h2>
+
+    <form action="#" th:action="@{/plan/savesabablarplan}" th:object="${sabablarPlan}" method="POST">
+        <input type="hidden" th:field="*{id}" />
+        <input type="text" th:field="*{uchastka}" placeholder="uchastka" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{nachalnik}" placeholder="nachalnik" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{master}" placeholder="master" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{brigadir}" placeholder="brigadir" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{smena}" placeholder="smena" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{toxtalishsababi}" placeholder="toxtalishsababi" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{toxtalishnuktasi}" placeholder="toxtalishnuktasi" class="form-control mb-4 col-4">
+        <input type="date" th:field="*{toxtalishdate}" placeholder="toxtalishdate" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{starttime}" placeholder="starttime" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{finishtime}" placeholder="finishtime" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{toxtaganvaqt}" placeholder="toxtaganvaqt" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{mkiritishfio}" placeholder="mkiritishfio" class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2"> Update ts</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/static}"> Back to TS List</a>
+</div>
+</body>
+
+</html>

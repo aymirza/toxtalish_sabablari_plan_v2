@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+  <meta charset="utf-8"/>
+  <title>To'xtalish sabablari</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-brand" sec:authorize="isAuthenticated()">
+      <b><span sec:authentication="name">Username</span></b>
+      &nbsp;
+      <i><span sec:authentication="principal.authorities">Roles</span></i>
+    </div>
+
+  </div>
+</nav>
+<div align="container mt-5" style="padding: 10px">
+  <h1 align="center"> To'xtalishlar systemasi </h1>
+
+
+  <form style="display: inline">
+    <a sec:authorize="hasAnyAuthority('YARATISH','ADMIN','PLAN')" th:href="@{/plan/tsplan}" class="btn btn-info"> To'xtalish plan </a>
+
+    <a sec:authorize="hasAnyAuthority('YARATISH','ADMIN')" th:href="@{/plan/newsabablarplan}" class="btn btn-info"> To'xtalish qo'shish </a>
+
+    <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/tsturk}" class="btn btn-info"> To'xtalish turk </a>
+
+  </form>
+</div>
+<style>
+  .button {
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 8px;
+
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+  .button1 {
+    background-color: #39ff00;
+    color: black;
+    border: 2px solid #0032fc;
+    width: 130px;
+  }
+
+  .button1:hover {
+    background-color: #4CAF50;
+    color: #ffffff;
+  }
+
+  .button2 {
+    background-color: #ffd400;
+    color: black;
+    border: 2px solid #0033ff;
+    width: 130px;
+  }
+
+  .button2:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+
+  .button3 {
+    background-color: #ff0000;
+    color: black;
+    border: 2px solid #205efa;
+    width: 180px;
+  }
+
+  .button3:hover {
+    background-color: #f80101;
+    color: white;
+  }
+
+</style>
+</body>
+</html>

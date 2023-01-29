@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Product Manager</title>
+</head>
+<body>
+
+<div align="center">
+    <h1>Product List</h1>
+    <a href="/new">Create New Product</a>
+    <br/>
+    <a href="/city">City List</a>
+    <br/>
+    <form th:action="@{/static}">
+        Filter: <input type="date" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+        &nbsp;
+        <input type="submit" value="Search" />
+        &nbsp;
+        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+    </form>
+    <script type="text/javascript">
+        function clearSearch() {
+            window.location = "[[@{/}]]";
+        }
+    </script>
+    <br/>
+    <table border="1" cellpadding="10"  th:each="product : ${listProducts}">
+        <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Made In</th>
+            <th>Price</th>
+            <th>Date Create</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${product.id}">Product ID</td>
+            <td th:text="${product.name}">Name</td>
+            <td th:text="${product.brand}">Brand</td>
+            <td th:text="${product.madein}">Made in</td>
+            <td th:text="${product.price}">Price</td>
+            <td th:text="${product.dtcreate}">Date Create</td>
+            <td>
+                <a th:href="@{/edit/{id}(id=${product.id})}">Edit</a>
+                &nbsp;&nbsp;&nbsp;
+                <a th:href="@{/delete/{id}(id=${product.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+        <thead>
+        <tr>
+            <th>City Name</th>
+            <th>City Prices</th>
+            <th>City Date Create</th>
+            <th>Total Prices</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="city : ${listCity}">
+            <td th:text="${city.cname}">City Name</td>
+            <td th:text="${city.prices}">City Prices</td>
+            <td th:text="${city.dtcreate}">City Date Create</td>
+            <td th:text="${city.prices*product.price}">Prices*Price</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

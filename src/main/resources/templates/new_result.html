@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Create New Result</title>
+</head>
+<body>
+<div align="center">
+    <h1>Kunlik natijalarni kiriting</h1>
+    <br />
+    <form action="#" th:action="@{/saveResult}" th:object="${result}"
+          method="post">
+
+        <table border="1" cellpadding="10">
+
+            <tr> <th colspan="6" bgcolor="#a9a9a9">Kutilgan</th> </tr>
+
+            <tr>
+                <th colspan="4" bgcolor="#a9a9a9">Smena1</th>
+                <th rowspan="2" bgcolor="#a9a9a9">To'xtalish sanasi</th>
+            </tr>
+            <tr>
+                <th bgcolor="#a9a9a9">Line №1</th>
+                <th bgcolor="#a9a9a9">Cykl Time №1</th>
+                <th bgcolor="#a9a9a9">Line №2</th>
+                <th bgcolor="#a9a9a9">Cykl Time №2</th>
+            </tr>
+            <tr>
+
+                <td><input type="text" th:field="*{rline11}"/></td>
+                <td><input type="text" th:field="*{rcikl11}"/></td>
+                <td><input type="text" th:field="*{rline12}"/></td>
+                <td><input type="text" th:field="*{rcikl12}"/></td>
+                <td rowspan="4"><input type="date" th:field="*{rdatecreate}"/></td>
+            </tr>
+            <tr>
+                <th colspan="4" bgcolor="#a9a9a9">Smena2</th>
+
+            </tr>
+
+
+            <tr>
+                <th bgcolor="#a9a9a9">Line №1</th>
+                <th bgcolor="#a9a9a9">Cykl Time №1</th>
+                <th bgcolor="#a9a9a9">Line №2</th>
+                <th bgcolor="#a9a9a9">Cykl Time №2</th>
+            </tr>
+
+            <tr>
+                <td><input type="text" th:field="*{rline21}"/></td>
+                <td><input type="text" th:field="*{rcikl21}"/></td>
+                <td><input type="text" th:field="*{rline22}"/></td>
+                <td><input type="text" th:field="*{rcikl22}"/></td>
+
+
+            </tr>
+
+
+        </table>
+        <br/>
+        <tr>
+            <td colspan="2"><button type="submit">Save</button> </td>
+        </tr>
+    </form>
+</div>
+</body>
+</html>

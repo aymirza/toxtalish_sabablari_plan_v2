@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Create New Result</title>
+</head>
+<body>
+<div align="center">
+    <h1>Kunlik to'xtalish sabablarini kiriting</h1>
+    <br />
+    <form action="#" th:action="@{/saveSabablar}" th:object="${sabablar}"
+          method="post">
+
+        <table border="1" cellpadding="10">
+
+            <tr> <th colspan="10" bgcolor="#a9a9a9">Kutilgan</th> </tr>
+
+            <tr>
+                <th bgcolor="#a9a9a9">To'xtalish sababi</th>
+                <th colspan="5"> <input type="text" th:field="*{prichina}"></th>
+            </tr>
+            <tr>
+                <th bgcolor="#a9a9a9">Umumiy qoliplar soni</th>
+                <th colspan="5"> <input type="text" th:field="*{sqolip}"></th>
+            </tr>
+            <tr>
+                <th bgcolor="#a9a9a9">To'xtalish soati</th>
+                <th colspan="5"><input type="text" th:field="*{ssoat}"></th>
+            </tr>
+            <tr>
+                <th bgcolor="#a9a9a9">To'xtalish soati</th>
+                <th colspan="5"><input type="date" id="sdatecreate" th:field="*{sdatecreate}"></th>
+            </tr>
+
+        </table>
+        <br/>
+        <tr>
+            <td colspan="2"><button type="submit">Save</button> </td>
+        </tr>
+    </form>
+</div>
+</body>
+</html>

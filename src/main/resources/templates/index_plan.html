@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>To'xtalish sabablari PLAN</title>
+
+    <title>To'xtalish sabablari</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-brand" sec:authorize="isAuthenticated()">
+            <b><span sec:authentication="name">Username</span></b>
+            &nbsp;
+            <i><span sec:authentication="principal.authorities">Roles</span></i>
+        </div>
+        <ul class="nav navbar-nav navbar-right ">
+            <li class="active" sec:authorize="hasAnyAuthority('YARATISH','ADMIN' )">
+                <a href="/plan/newsabablarplan">To'xtalishni kiritish</a></li>
+            <li class="active"><a href="/logout">Chiqish</a></li>
+        </ul>
+    </div>
+</nav>
+<div align="container mt-5" style="padding: 10px">
+    <h1 align="center"> To'xtalishlar ro'yhati </h1>
+
+
+    <form style="display: inline" th:action="@{/plan/tsplan}" method="get">
+        <input type="date" name="poiskdate" th:value="${poiskdate}" size="50">
+        <button type="submit" class="btn btn-info">Search</button>
+    </form>
+    <form style="display: inline" th:action="@{/plan/excel}" method="get">
+        <button type="submit" class="btn btn-info">Download</button>
+        <input style="visibility: hidden" type="date" name="poiskdate" th:value="${poiskdate}" size="50">
+
+    </form>
+
+    <table class="table table-bordered table-sm mt-2">
+        <thead>
+        <tr>
+
+            <th style="text-align: center" align="center">Id</th>
+            <th style="text-align: center">Участок номи</th>
+            <th style="text-align: center">Участок рахбари Ф.И.О</th>
+            <th style="text-align: center">Участок мастер Ф.И.О</th>
+            <th style="text-align: center">Участок бригадер Ф.И.О</th>
+            <th style="text-align: center">Иш сменаси</th>
+            <th style="text-align: center">Тўхталиш сабаби</th>
+            <th style="text-align: center">Участокда тўхташ пункти</th>
+            <th style="text-align: center">Санъа</th>
+            <th style="text-align: center">Тўхталган вақт</th>
+            <th style="text-align: center">Ишга туширилган вақт</th>
+            <th style="text-align: center">Умумий тўхталган вақт</th>
+            <th style="text-align: center">Маълумот киритувчи Ф.И.О</th>
+            <th style="text-align: center" align="center" sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>
+
+            <th>Id</th>
+            <th>uchastka</th>
+            <th>nachalnik</th>
+            <th>master</th>
+            <th>brigadir</th>
+            <th>smena</th>
+            <th>toxtalishsababi</th>
+            <th>toxtalishnuktasi</th>
+            <th>toxtalishdate</th>
+            <th>starttime</th>
+            <th>finishtime</th>
+            <th>toxtaganvaqt</th>
+            <th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>
+         </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sabablarplan : ${sabablarPlanList}" th:field="${sabablarplan}">
+            <td th:text="${sabablarplanStat.index+1}"></td>
+            <td th:text="${sabablarplan.uchastka}"></td>
+            <td th:text="${sabablarplan.nachalnik}"></td>
+            <td th:text="${sabablarplan.master}"></td>
+            <td th:text="${sabablarplan.brigadir}"></td>
+            <td th:text="${sabablarplan.smena}"></td>
+            <td th:text="${sabablarplan.toxtalishsababi}"></td>
+            <td th:text="${sabablarplan.toxtalishnuktasi}"></td>
+            <td th:text="${sabablarplan.toxtalishdate}"></td>
+            <td th:text="${sabablarplan.starttime}"></td>
+            <td th:text="${sabablarplan.finishtime}"></td>
+            <td th:text="${sabablarplan.toxtaganvaqt}"></td>
+
+            <td th:text="${sabablarplan.mkiritishfio}"></td>
+
+            <td>
+                <a sec:authorize="hasAnyAuthority('ADMIN')"
+                   th:href="@{/plan/showFormForUpdate/{id}(id=${sabablarplan.id})}"
+                   class="btn btn-primary">Update</a>
+                <a sec:authorize="hasAnyAuthority('ADMIN')"
+                   th:href="@{/plan/deleteSabablar/{id}(id=${sabablarplan.id})}"
+                   class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .button {
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        margin: 4px 8px;
+
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+    .button1 {
+        background-color: #39ff00;
+        color: black;
+        border: 2px solid #0032fc;
+        width: 130px;
+    }
+
+    .button1:hover {
+        background-color: #4CAF50;
+        color: #ffffff;
+    }
+
+    .button2 {
+        background-color: #ffd400;
+        color: black;
+        border: 2px solid #0033ff;
+        width: 130px;
+    }
+
+    .button2:hover {
+        background-color: #008CBA;
+        color: white;
+    }
+
+    .button3 {
+        background-color: #ff0000;
+        color: black;
+        border: 2px solid #205efa;
+        width: 180px;
+    }
+
+    .button3:hover {
+        background-color: #f80101;
+        color: white;
+    }
+
+</style>
+
+</body>
+</html>
